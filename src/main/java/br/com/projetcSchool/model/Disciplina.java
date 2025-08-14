@@ -4,23 +4,34 @@ import java.util.ArrayList;
 
 public class Disciplina {
     private String codigo;
+    private String nome;
     private ArrayList<Aluno> alunos;
     private Professor professor;
     private ArrayList<Avaliacao> avaliacaos;
 
-    public Disciplina(String codigo, ArrayList<Aluno> alunos, Professor professor, ArrayList<Avaliacao> avaliacao) {
+    public Disciplina(String codigo, String nome, ArrayList<Aluno> alunos, Professor professor, ArrayList<Avaliacao> avaliacao) {
         this.codigo = codigo;
+        this.nome = nome;
         this.alunos = alunos;
         this.professor = professor;
         this.avaliacaos = avaliacao;
     }
 
+    //Getters and Setters
     public String getCodigo() {
         return codigo;
     }
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public ArrayList<Aluno> getAlunos() {
@@ -48,19 +59,19 @@ public class Disciplina {
     }
 
     //Add apenas um aluno
-    private void adciocionarAluno(Aluno aluno){
+    private void adciocionarAluno(Aluno aluno) {
         alunos.add(aluno);
     }
 
-    public void pesquisarAluno(String nome){
+    public void pesquisarAluno(String nome) {
         //For()...
     }
 
-    public void removerAluno(Aluno aluno){
+    public void removerAluno(Aluno aluno) {
         alunos.remove(aluno);
     }
 
-    public void adiocinarAvaliacao(Avaliacao avaliacao){
+    public void adiocinarAvaliacao(Avaliacao avaliacao) {
         avaliacaos.add(avaliacao);
     }
 
@@ -68,6 +79,7 @@ public class Disciplina {
     public String toString() {
         return "Disciplina{" +
                 "codigo='" + codigo + '\'' +
+                ", nome='" + nome + '\'' +
                 ", alunos=" + alunos +
                 ", professor=" + professor +
                 ", avaliacaos=" + avaliacaos +
