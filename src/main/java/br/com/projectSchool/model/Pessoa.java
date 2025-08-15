@@ -1,4 +1,4 @@
-package br.com.projetcSchool.model;
+package br.com.projectSchool.model;
 
 public abstract class Pessoa {
     private String nome;

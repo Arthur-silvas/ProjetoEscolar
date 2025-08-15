@@ -1,4 +1,4 @@
-package br.com.projetcSchool.model;
+package br.com.projectSchool.model;
 
 import java.util.ArrayList;
 
