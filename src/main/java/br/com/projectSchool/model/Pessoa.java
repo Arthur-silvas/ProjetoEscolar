@@ -1,8 +1,18 @@
 package br.com.projectSchool.model;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.MappedSuperclass;
+import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
+
+@MappedSuperclass
 public abstract class Pessoa {
-    private String nome;
+
+    @id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    private String nome;
 
     public Pessoa(String nome, String id) {
         this.nome = nome;
