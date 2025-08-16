@@ -1,8 +1,8 @@
 package br.com.projectSchool.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class EcossistemaEscolar {
-    private ArrayList<Escola> escolar;
+    private List<Escola> escolar;
 
 }

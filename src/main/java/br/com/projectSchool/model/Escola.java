@@ -1,24 +1,45 @@
 package br.com.projectSchool.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "escolas")
 public class Escola {
-    private String nome;
-    private String codigoID;
-    private ArrayList<Turma> turmas;
-    private ArrayList<Aluno> alunos;
-    private ArrayList<Professor> professors;
-    private ArrayList<Disciplina> disciplinas;
-    private ArrayList<Avaliacao> avaliacaos;
 
-    public Escola(String nome, String codigoID, ArrayList<Turma> turmas, ArrayList<Aluno> alunos, ArrayList<Professor> professors, ArrayList<Disciplina> disciplinas, ArrayList<Avaliacao> avaliacaos) {
+    @id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @OneToMany
+    private List<Turma> turmas;
+
+    @OneToMany
+    private List<Aluno> alunos;
+
+    private List<Professor> professors;
+    private List<Disciplina> disciplinas;
+    private List<Avaliacao> avaliacaos;
+
+    public Escola(String nome, String id, List<Turma> turmas, List<Aluno> alunos, List<Professor> professors, List<Disciplina> disciplinas, List<Avaliacao> avaliacaos) {
         this.nome = nome;
-        this.codigoID = codigoID;
+        this.id = id;
         this.turmas = turmas;
         this.alunos = alunos;
         this.professors = professors;
         this.disciplinas = disciplinas;
         this.avaliacaos = avaliacaos;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -29,51 +50,43 @@ public class Escola {
         this.nome = nome;
     }
 
-    public String getCodigoID() {
-        return codigoID;
-    }
-
-    public void setCodigoID(String codigoID) {
-        this.codigoID = codigoID;
-    }
-
-    public ArrayList<Turma> getTurmas() {
+    public List<Turma> getTurmas() {
         return turmas;
     }
 
-    public void setTurmas(ArrayList<Turma> turmas) {
+    public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
     }
 
-    public ArrayList<Aluno> getAlunos() {
+    public List<Aluno> getAlunos() {
         return alunos;
     }
 
-    public void setAlunos(ArrayList<Aluno> alunos) {
+    public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
     }
 
-    public ArrayList<Professor> getProfessors() {
+    public List<Professor> getProfessors() {
         return professors;
     }
 
-    public void setProfessors(ArrayList<Professor> professors) {
+    public void setProfessors(List<Professor> professors) {
         this.professors = professors;
     }
 
-    public ArrayList<Disciplina> getDisciplinas() {
+    public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
+    public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
-    public ArrayList<Avaliacao> getAvaliacaos() {
+    public List<Avaliacao> getAvaliacaos() {
         return avaliacaos;
     }
 
-    public void setAvaliacaos(ArrayList<Avaliacao> avaliacaos) {
+    public void setAvaliacaos(List<Avaliacao> avaliacaos) {
         this.avaliacaos = avaliacaos;
     }
 
@@ -81,7 +94,7 @@ public class Escola {
     public String toString() {
         return "Escola{" +
                 "nome='" + nome + '\'' +
-                ", codigoID='" + codigoID + '\'' +
+                ", codigoID='" + id + '\'' +
                 ", turmas=" + turmas +
                 ", alunos=" + alunos +
                 ", professors=" + professors +

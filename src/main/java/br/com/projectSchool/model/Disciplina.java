@@ -1,29 +1,52 @@
 package br.com.projectSchool.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "disciplinas")
 public class Disciplina {
-    private String codigo;
-    private String nome;
-    private ArrayList<Aluno> alunos;
-    private Professor professor;
-    private ArrayList<Avaliacao> avaliacaos;
 
-    public Disciplina(String codigo, String nome, ArrayList<Aluno> alunos, Professor professor, ArrayList<Avaliacao> avaliacao) {
-        this.codigo = codigo;
+    @id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @ManyToMany
+    @JoinTable(
+            name = "aluno_disciplina",
+            joinColumns = @JoinColumn(name = "disciplina_id"),
+            inverseJoinColumns = @JoinColumn(name = "aluno_id")
+    )
+    private List<Aluno> alunos;
+
+    @ManyToMany
+    @JoinTable(
+            name = "professor_disciplina",
+            joinColumns = @JoinColumn(name = "disciplina_id"),
+            inverseJoinColumns = @JoinColumn(name = "professor_id")
+    )
+    private Professor professor;
+
+    @ManyToOne//?
+    private List<Avaliacao> avaliacaos;
+
+    public Disciplina(String id, String nome, List<Aluno> alunos, Professor professor, List<Avaliacao> avaliacaos) {
+        this.id = id;
         this.nome = nome;
         this.alunos = alunos;
         this.professor = professor;
-        this.avaliacaos = avaliacao;
+        this.avaliacaos = avaliacaos;
     }
 
-    //Getters and Setters
-    public String getCodigo() {
-        return codigo;
+    public String getId() {
+        return id;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -34,11 +57,11 @@ public class Disciplina {
         this.nome = nome;
     }
 
-    public ArrayList<Aluno> getAlunos() {
+    public List<Aluno> getAlunos() {
         return alunos;
     }
 
-    public void setAlunos(ArrayList<Aluno> alunos) {
+    public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
     }
 
@@ -50,35 +73,18 @@ public class Disciplina {
         this.professor = professor;
     }
 
-    public ArrayList<Avaliacao> getAvaliacaos() {
+    public List<Avaliacao> getAvaliacaos() {
         return avaliacaos;
     }
 
-    public void setAvaliacaos(ArrayList<Avaliacao> avaliacaos) {
+    public void setAvaliacaos(List<Avaliacao> avaliacaos) {
         this.avaliacaos = avaliacaos;
-    }
-
-    //Add apenas um aluno
-    private void adciocionarAluno(Aluno aluno) {
-        alunos.add(aluno);
-    }
-
-    public void pesquisarAluno(String nome) {
-        //For()...
-    }
-
-    public void removerAluno(Aluno aluno) {
-        alunos.remove(aluno);
-    }
-
-    public void adiocinarAvaliacao(Avaliacao avaliacao) {
-        avaliacaos.add(avaliacao);
     }
 
     @Override
     public String toString() {
         return "Disciplina{" +
-                "codigo='" + codigo + '\'' +
+                "codigo='" + id + '\'' +
                 ", nome='" + nome + '\'' +
                 ", alunos=" + alunos +
                 ", professor=" + professor +
