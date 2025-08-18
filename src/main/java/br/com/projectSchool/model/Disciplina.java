@@ -1,18 +1,30 @@
 package br.com.projectSchool.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "disciplinas")
 public class Disciplina {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String nome;
+
+    @Column(name = "codigo", nullable = false)
+    private String codigo;
+
+    @ManyToOne()
+    @JoinColumn(name = "escola_id")
+    private Escola escola;
+
+    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Avaliacao> avaliacaos = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -20,7 +32,7 @@ public class Disciplina {
             joinColumns = @JoinColumn(name = "disciplina_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
-    private List<Aluno> alunos;
+    private List<Aluno> alunos = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -28,12 +40,10 @@ public class Disciplina {
             joinColumns = @JoinColumn(name = "disciplina_id"),
             inverseJoinColumns = @JoinColumn(name = "professor_id")
     )
-    private Professor professor;
+    private List<Professor> professor = new ArrayList<>();
 
-    @ManyToOne//?
-    private List<Avaliacao> avaliacaos;
 
-    public Disciplina(String id, String nome, List<Aluno> alunos, Professor professor, List<Avaliacao> avaliacaos) {
+    public Disciplina(Long id, String nome, List<Aluno> alunos, List<Professor> professor, List<Avaliacao> avaliacaos) {
         this.id = id;
         this.nome = nome;
         this.alunos = alunos;
@@ -41,11 +51,11 @@ public class Disciplina {
         this.avaliacaos = avaliacaos;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,11 +75,11 @@ public class Disciplina {
         this.alunos = alunos;
     }
 
-    public Professor getProfessor() {
+    public List<Professor> getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
+    public void setProfessor(List<Professor> professor) {
         this.professor = professor;
     }
 

@@ -2,42 +2,40 @@ package br.com.projectSchool.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "avaliacoes")
 public class Avaliacao {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
-    @Column(name = "nota")
+    @Column(name = "nota", nullable = false)
     private String nota;
 
     @ManyToOne
+    @JoinColumn(name = "aluno_id", nullable = false)
     private Aluno aluno;
 
-    @ManyToMany
-    @JoinTable(
-            name = "avaliacao_disciplina",
-            joinColumns = @JoinColumn(name = "avaliacao_id"),
-            inverseJoinColumns = @JoinColumn(name = "disciplina_id")
-    )
-    private List<Disciplina> disciplinas;
+    @OneToMany
+    @JoinColumn(name = "disciplina_id", nullable = false)
+    private Disciplina disciplina;
 
-    public Avaliacao(String id, String nota, Aluno aluno, List<Disciplina> disciplinas) {
+    public Avaliacao(Long id, String nota, Aluno aluno, Disciplina disciplina) {
         this.id = id;
         this.nota = nota;
         this.aluno = aluno;
-        this.disciplinas = disciplinas;
+        this.disciplina = disciplina;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,12 +55,12 @@ public class Avaliacao {
         this.aluno = aluno;
     }
 
-    public List<Disciplina> getDisciplinas() {
-        return disciplinas;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setDisciplinas(List<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
+    public void setDisciplinas( Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 
     @Override
@@ -71,7 +69,7 @@ public class Avaliacao {
                 "id='" + id + '\'' +
                 ", nota='" + nota + '\'' +
                 ", aluno=" + aluno +
-                ", disciplinas=" + disciplinas +
+                ", disciplinas=" + disciplina +
                 '}';
     }
 }

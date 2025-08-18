@@ -2,18 +2,26 @@ package br.com.projectSchool.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "turmas")
 public class Turma {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String nome;
+
+    @Column(name = "codigo_id", nullable = false)
+    private String codigoID;
+
+    @ManyToOne
+    @JoinColumn(name = "escola_id")
+    private Escola escola;
 
     @ManyToMany
     @JoinTable(
@@ -21,7 +29,7 @@ public class Turma {
             joinColumns = @JoinColumn(name = "turma_id"),
             inverseJoinColumns = @JoinColumn(name = "disciplina_id")
     )
-    private List<Disciplina> disciplinas;
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -31,22 +39,24 @@ public class Turma {
     )
     private List<Professor> professors;
 
-    @OneToMany
-    private List<Aluno> alunos;
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Aluno> alunos = new ArrayList<>();
 
-    public Turma(String id, String nome, List<Disciplina> disciplinas, List<Professor> professors, List<Aluno> alunos) {
+    public Turma(Long id, String nome, String codigoID, Escola escola, List<Disciplina> disciplinas, List<Professor> professors, List<Aluno> alunos) {
         this.id = id;
         this.nome = nome;
+        this.codigoID = codigoID;
+        this.escola = escola;
         this.disciplinas = disciplinas;
         this.professors = professors;
         this.alunos = alunos;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,6 +66,22 @@ public class Turma {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCodigoID() {
+        return codigoID;
+    }
+
+    public void setCodigoID(String codigoID) {
+        this.codigoID = codigoID;
+    }
+
+    public Escola getEscola() {
+        return escola;
+    }
+
+    public void setEscola(Escola escola) {
+        this.escola = escola;
     }
 
     public List<Disciplina> getDisciplinas() {
@@ -85,8 +111,10 @@ public class Turma {
     @Override
     public String toString() {
         return "Turma{" +
-                "nome='" + nome + '\'' +
-                ", codigoID='" + id + '\'' +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", codigoID='" + codigoID + '\'' +
+                ", escola=" + escola +
                 ", disciplinas=" + disciplinas +
                 ", professors=" + professors +
                 ", alunos=" + alunos +

@@ -1,11 +1,20 @@
 package br.com.projectSchool.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "professores")
 public class Professor extends Pessoa{
+
+    @Column(name = "registro_id", nullable = false)
+    private String codigoID;
+
+    @ManyToOne
+    @JoinColumn(name = "escola_id")
+    private Escola escola;
 
     @ManyToMany
     @JoinTable(
@@ -13,7 +22,7 @@ public class Professor extends Pessoa{
             joinColumns = @JoinColumn(name = "professor_id"),
             inverseJoinColumns = @JoinColumn(name = "turma_id")
     )
-    private List<Turma> turmas;
+    private List<Turma> turmas = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -21,12 +30,30 @@ public class Professor extends Pessoa{
             joinColumns = @JoinColumn(name = "professor_id"),
             inverseJoinColumns = @JoinColumn(name = "disciplina_id")
     )
-    private List<Disciplina> disciplinas;
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
-    public Professor(String nome, String id, List<Turma> turmas, List<Disciplina> disciplinas) {
+    public Professor(String nome, Long id, String codigoID, Escola escola, List<Turma> turmas, List<Disciplina> disciplinas) {
         super(nome, id);
+        this.codigoID = codigoID;
+        this.escola = escola;
         this.turmas = turmas;
         this.disciplinas = disciplinas;
+    }
+
+    public String getCodigoID() {
+        return codigoID;
+    }
+
+    public void setCodigoID(String codigoID) {
+        this.codigoID = codigoID;
+    }
+
+    public Escola getEscola() {
+        return escola;
+    }
+
+    public void setEscola(Escola escola) {
+        this.escola = escola;
     }
 
     public List<Turma> getTurmas() {
@@ -48,7 +75,9 @@ public class Professor extends Pessoa{
     @Override
     public String toString() {
         return "Professor{" +
-                "turmas=" + turmas +
+                "codigoID='" + codigoID + '\'' +
+                ", escola=" + escola +
+                ", turmas=" + turmas +
                 ", disciplinas=" + disciplinas +
                 '}';
     }

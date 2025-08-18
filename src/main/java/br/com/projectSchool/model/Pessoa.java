@@ -1,20 +1,19 @@
 package br.com.projectSchool.model;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 
 @MappedSuperclass
 public abstract class Pessoa {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
+
+    @Column(nullable = false)
     private String nome;
 
-    public Pessoa(String nome, String id) {
+    public Pessoa(String nome, Long id) {
         this.nome = nome;
         this.id = id;
     }
@@ -27,11 +26,11 @@ public abstract class Pessoa {
         this.nome = nome;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

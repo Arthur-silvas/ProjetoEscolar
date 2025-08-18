@@ -1,30 +1,39 @@
 package br.com.projectSchool.model;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "escolas")
 public class Escola {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @OneToMany
-    private List<Turma> turmas;
+    @Column(name = "codigo_id", nullable = false, unique = true)
+    private String codigoId;
 
-    @OneToMany
-    private List<Aluno> alunos;
+    @OneToMany(mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Turma> turmas = new ArrayList<>();
 
-    private List<Professor> professors;
-    private List<Disciplina> disciplinas;
-    private List<Avaliacao> avaliacaos;
+    @OneToMany(mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Aluno> alunos = new ArrayList<>();
 
-    public Escola(String nome, String id, List<Turma> turmas, List<Aluno> alunos, List<Professor> professors, List<Disciplina> disciplinas, List<Avaliacao> avaliacaos) {
+    @OneToMany(mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Professor> professors = new ArrayList<>();
+
+    @OneToMany(mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Disciplina> disciplinas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Avaliacao> avaliacaos = new ArrayList<>();
+
+    public Escola(String nome, Long id, List<Turma> turmas, List<Aluno> alunos, List<Professor> professors, List<Disciplina> disciplinas, List<Avaliacao> avaliacaos) {
         this.nome = nome;
         this.id = id;
         this.turmas = turmas;
@@ -34,11 +43,11 @@ public class Escola {
         this.avaliacaos = avaliacaos;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
