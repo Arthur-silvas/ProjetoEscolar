@@ -1,9 +1,10 @@
 package br.com.projectSchool;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import br.com.projectSchool.model.Aluno;
+import br.com.projectSchool.model.Escola;
+
 public class Main {
     public static void main(String[] args) {
-
+    Escola escola = new Escola("Escola de Desenvolvimento de Software","EDS-2024");
     }
 }

@@ -33,6 +33,11 @@ public class Escola {
     @OneToMany(mappedBy = "escola", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Avaliacao> avaliacaos = new ArrayList<>();
 
+    public Escola(String nome, String codigoId) {
+        this.nome = nome;
+        this.codigoId = codigoId;
+    }
+
     public Escola(String nome, Long id, List<Turma> turmas, List<Aluno> alunos, List<Professor> professors, List<Disciplina> disciplinas, List<Avaliacao> avaliacaos) {
         this.nome = nome;
         this.id = id;
