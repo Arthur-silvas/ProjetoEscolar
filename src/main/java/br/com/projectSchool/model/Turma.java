@@ -42,6 +42,11 @@ public class Turma {
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Aluno> alunos = new ArrayList<>();
 
+    public Turma(String nome, String codigoID) {
+        this.nome = nome;
+        this.codigoID = codigoID;
+    }
+
     public Turma(Long id, String nome, String codigoID, Escola escola, List<Disciplina> disciplinas, List<Professor> professors, List<Aluno> alunos) {
         this.id = id;
         this.nome = nome;
