@@ -13,6 +13,9 @@ public abstract class Pessoa {
     @Column(nullable = false)
     private String nome;
 
+    public Pessoa() {
+    }
+
     public Pessoa(String nome, Long id) {
         this.nome = nome;
         this.id = id;

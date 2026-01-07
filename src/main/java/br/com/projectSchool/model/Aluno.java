@@ -28,6 +28,7 @@ public class Aluno extends Pessoa{
     )
     private List<Disciplina> disciplinas = new ArrayList<>();
 
+
     public Aluno(String nome, Long id, String matricula, Escola escola, Turma turma, List<Disciplina> disciplinas) {
         super(nome, id);
         this.matricula = matricula;
